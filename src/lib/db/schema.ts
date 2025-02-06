@@ -36,7 +36,7 @@ export const questions = pgTable("questions", {
 
 export const questionOptions = pgTable("question_options", {
   id: serial().primaryKey().notNull(),
-  text: varchar({ length: 255 }).notNull(),
+  text: varchar({ length: 255 }).notNull().unique(),
   questionId: serial("question_id")
     .references(() => questions.id)
     .notNull(),

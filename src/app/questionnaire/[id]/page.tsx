@@ -19,7 +19,7 @@ export default async function Questionnaire(props: {
   const { id } = await props.params;
   const { error } = (await props.searchParams) ?? {};
 
-  const userId = await getSession();
+  const { userId } = (await getSession()) ?? {};
   if (!userId) {
     redirect("/");
   }
@@ -40,9 +40,10 @@ export default async function Questionnaire(props: {
     "use server";
     const userAnswers = [];
     const questionIds = [];
-    const userId = await getSession();
+    const { userId: id } = (await getSession()) ?? {};
+    const userId = Number(id);
     const questionnaireId = formData.get("questionnaire-id");
-    if (userId && questionnaireId) {
+    if (!Number.isNaN(userId) && questionnaireId) {
       for (const [key, value] of formData) {
         if (value.toString().trim() === "" && !key.includes("$ACTION_ID")) {
           redirect(
@@ -110,7 +111,7 @@ export default async function Questionnaire(props: {
             <QuestionField
               key={question.id}
               question={question}
-              userId={userId}
+              userId={Number(userId)}
             />
           ))}
           {error ? (

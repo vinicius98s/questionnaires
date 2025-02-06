@@ -17,7 +17,6 @@ export async function QuestionField({
   readOnly?: boolean;
 }) {
   const questionId = question.id.toString();
-
   const options = await db
     .select()
     .from(questionOptions)

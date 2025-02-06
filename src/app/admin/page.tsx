@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { count, eq } from "drizzle-orm";
+import { count, eq, ne } from "drizzle-orm";
 
 import { db } from "@/lib/db";
 import { answers, questionnaires, questions, users } from "@/lib/db/schema";
@@ -8,14 +8,15 @@ import { answers, questionnaires, questions, users } from "@/lib/db/schema";
 import { getSession } from "@/lib/auth";
 
 export default async function Admin() {
-  const userId = await getSession();
-  if (!userId) {
+  const { userId, isAdmin } = (await getSession()) ?? {};
+  if (!userId || !isAdmin) {
     redirect("/");
   }
 
   const [{ count: totalQuestionnaires }] = await db
     .select({ count: count() })
     .from(questionnaires);
+
   const usersData = await db
     .select({
       id: users.id,
@@ -25,6 +26,7 @@ export default async function Admin() {
     .from(users)
     .leftJoin(answers, eq(answers.userId, users.id))
     .leftJoin(questions, eq(questions.id, answers.questionId))
+    .where(ne(users.id, Number(userId)))
     .groupBy(users.id, questions.questionnaireId);
 
   const usersDataWithAnsweredQuestionnaires = usersData.reduce<
