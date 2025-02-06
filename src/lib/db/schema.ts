@@ -23,7 +23,11 @@ export const questionnaires = pgTable("questionnaires", {
   name: varchar({ length: 255 }).notNull(),
 });
 
-export const questionType = pgEnum("question_type", ["mcq", "input"]);
+export const questionType = pgEnum("question_type", [
+  "select",
+  "multi_select",
+  "input",
+]);
 export const questions = pgTable("questions", {
   id: serial().primaryKey().notNull(),
   text: varchar({ length: 255 }).notNull(),

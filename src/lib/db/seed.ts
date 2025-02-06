@@ -52,13 +52,21 @@ async function main() {
         }
       }
 
+      const isMultiSelectQuestion = question.question
+        .toLowerCase()
+        .includes("select all that apply");
+
       return {
         id: Number(id),
         text: question.question,
-        type: question.type,
+        type: isMultiSelectQuestion
+          ? "multi_select"
+          : question.type === "mcq"
+            ? "select"
+            : "input",
         questionnaireId: Number(questionnaireId),
         priority: Number(priority),
-      };
+      } as const;
     }
   );
 

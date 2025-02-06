@@ -51,23 +51,32 @@ export default async function Questionnaire(props: {
           );
         }
 
-        const [id, optionId] = key.split("-");
-
-        const questionId = Number(id);
-        if (questionId && !Number.isNaN(questionId)) {
+        const [id, data] = key.split("-");
+        if (id === "select") {
+          const questionId = Number(data);
           questionIds.push(questionId);
-          if (optionId && value === "on") {
-            userAnswers.push({
-              option: Number(optionId),
-              questionId,
-              userId,
-            });
-          } else {
-            userAnswers.push({
-              questionId,
-              userId,
-              text: value.toString(),
-            });
+          userAnswers.push({
+            option: Number(value.toString()),
+            questionId,
+            userId,
+          });
+        } else {
+          const questionId = Number(id);
+          if (questionId && !Number.isNaN(questionId)) {
+            questionIds.push(questionId);
+            if (data && value === "on") {
+              userAnswers.push({
+                option: Number(data),
+                questionId,
+                userId,
+              });
+            } else {
+              userAnswers.push({
+                questionId,
+                userId,
+                text: value.toString(),
+              });
+            }
           }
         }
       }
