@@ -80,7 +80,7 @@ export default async function UserQuestionnaires(props: {
         })}
 
         <Button variant="secondary" className="mt-8" asChild>
-          <Link href="/admin">Back to admin page</Link>
+          <Link href="/admin">Back</Link>
         </Button>
       </div>
     </div>

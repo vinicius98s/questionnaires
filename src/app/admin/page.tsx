@@ -53,19 +53,23 @@ export default async function Admin() {
     <div className="w-screen h-screen flex flex-col justify-center items-center">
       <h1 className="text-xl font-semibold mb-8">Users</h1>
       <div className="flex flex-col gap-6">
-        {usersDataWithAnsweredQuestionnaires.map((user) => (
-          <Link
-            key={user.id}
-            href={`/admin/${user.id}`}
-            className="hover:bg-border px-4 py-2 rounded text-center"
-          >
-            <p className="text-base font-semibold">{user.username}</p>
-            <p className="text-sm font-semibold">
-              Questionnaires: {user.answeredQuestionnaires}/
-              {totalQuestionnaires}
-            </p>
-          </Link>
-        ))}
+        {usersDataWithAnsweredQuestionnaires.length ? (
+          usersDataWithAnsweredQuestionnaires.map((user) => (
+            <Link
+              key={user.id}
+              href={`/admin/${user.id}`}
+              className="hover:bg-border px-4 py-2 rounded text-center"
+            >
+              <p className="text-base font-semibold">{user.username}</p>
+              <p className="text-sm font-semibold">
+                Questionnaires: {user.answeredQuestionnaires}/
+                {totalQuestionnaires}
+              </p>
+            </Link>
+          ))
+        ) : (
+          <p>No users found</p>
+        )}
       </div>
     </div>
   );

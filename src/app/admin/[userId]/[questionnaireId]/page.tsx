@@ -59,7 +59,7 @@ export default async function Questionnaire(props: {
           ))}
 
           <Button variant="secondary" className="w-full" asChild>
-            <Link href={`/admin/${userId}`}>Back to user answers</Link>
+            <Link href={`/admin/${userId}`}>Back</Link>
           </Button>
         </form>
       ) : (

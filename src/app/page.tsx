@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -58,6 +59,9 @@ export default function Login() {
       <Card className="w-[350px] h-fit">
         <CardHeader>
           <CardTitle>Login</CardTitle>
+          <CardDescription>
+            If your account is not registered, it will be automatically created.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <LoginForm onLogin={onLogin} />
