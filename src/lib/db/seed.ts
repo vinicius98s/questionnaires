@@ -6,14 +6,14 @@ import { questionnaires, questionOptions, questions, users } from "./schema";
 
 type Question =
   | {
-      type: "mcq";
-      options: string[];
-      question: string;
-    }
+    type: "mcq";
+    options: string[];
+    question: string;
+  }
   | {
-      type: "input";
-      question: string;
-    };
+    type: "input";
+    question: string;
+  };
 
 async function main() {
   await db
@@ -62,8 +62,8 @@ async function main() {
     }
   );
 
-  await db.insert(questions).values(formattedQuestions);
-  await db.insert(questionOptions).values(questionOptionsData);
+  await db.insert(questions).values(formattedQuestions).onConflictDoNothing();
+  await db.insert(questionOptions).values(questionOptionsData).onConflictDoNothing();
 }
 
 main();
